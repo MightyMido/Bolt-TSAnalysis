@@ -110,7 +110,7 @@ def make_prediction(r_id, trend_model, seasonal_tbl, seasonal_model):
 
 
 if __name__ == '__main__':
-    data = Etl(switch=2).convert_order_value_to_ts()
+    data = Etl(switch=1).convert_order_value_to_ts()
     x = np.array([i for i in range(0, len(data))])
     model, x, trend_of_data, detrended_data = extract_trend(data['Values'])
     seasonal, trends, residuals = multiple_residual_extraction(n=7, x_ts=data, with_figure=0)
