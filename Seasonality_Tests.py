@@ -12,7 +12,7 @@ def adf_test_companion(ts_seasonal_dta, country=''):
     df_output = pd.Series(df_test[0:4], index=index_list)
     for key, value in df_test[4].items():
         df_output['Critical Value (%s)' % key] = value
-    print('Test Parameters for {} ================>\n'.format(country), df_output)
+    print('Test Parameters for {} ================> \n'.format(country), df_output)
     plot_acf(ts_seasonal_dta)
     matplotlib.pyplot.show()
 

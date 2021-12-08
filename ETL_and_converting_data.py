@@ -36,10 +36,11 @@ class Etl:
         data = dta[dta['Country'] == country]
         return data
 
-    def convert_order_value_to_ts(self, group_by_column='Created Date', column_name='Order Value € (Gross)'):
+    def convert_order_value_to_ts(self, dta_ts='', group_by_column='Created Date', column_name='Order Value € (Gross)'):
         """ creates data frame timeSeries to work with ..."""
-        dta = self.dta
-        dta_ts = dta.groupby([group_by_column]).sum()
+        if dta_ts == '':
+            dta = self.dta
+            dta_ts = dta.groupby([group_by_column]).sum()
         dta_ts_seasonal = dta_ts[column_name].copy()
         dta_ts_seasonal.reindex()
         ready_ts = pd.DataFrame({'Index': list(dta_ts_seasonal.index), 'Values': list(dta_ts_seasonal.values)})
@@ -68,7 +69,7 @@ class LaggedTimeSeries:
         """ main weight means the volume of  customer weights"""
         lateral_weight = 1 - main_weight
         cntr = 0
-        denoised_ts = self.ts_data
+        denoised_ts = self.data
         for row in denoised_ts.iterrows():
             if cntr > 0:
                 denoised_ts.iloc[cntr] = row['Values'] * main_weight + denoised_ts.iloc[cntr - 1] * lateral_weight
